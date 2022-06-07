@@ -6,7 +6,7 @@
   "author": "Kungfu Trader",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn dist",
+    "build": "yarn format",
     "dist": "ncc build index.js",
     "format": "prettier --write --parser typescript \"*.js\" && yarn dist",
     "lint": "eslint --ext .js ."

@@ -8,21 +8,11 @@ const main = async function () {
   const argv = {
     token: core.getInput('token'),
     owner: repo.owner,
-    expireIn: core.getInput('expire-in'),
-    onlyPrefix: core.getInput('only-prefix', { required: false }),
-    exceptPrefix: core.getInput('except-prefix', { required: false }),
   };
-  const deletedArtifacts = await lib.purgeArtifacts(
-    argv.token,
-    argv.owner,
-    argv.expireIn,
-    argv.onlyPrefix,
-    argv.exceptPrefix,
-  );
-  core.setOutput('deleted-artifacts', JSON.stringify(deletedArtifacts));
+  lib.checkFormat(argv);
 };
 
-if (process.env.GITHUB_ACTION) {
+if (require.main === module) {
   main().catch((error) => {
     console.error(error);
     core.setFailed(error.message);
