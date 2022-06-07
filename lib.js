@@ -31,5 +31,6 @@ exports.checkFormat = async function (argv) {
   const gitStatus = await gitCall('status', '--short');
   if (gitStatus) {
     console.log('\n! found unformatted code');
+    throw new Error(`Found unformatted code\n${gitStatus}`);
   }
 };
