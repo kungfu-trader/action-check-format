@@ -37,16 +37,35 @@ const github = __nccwpck_require__(5438);
 const fs = __nccwpck_require__(5747);
 const path = __nccwpck_require__(5622);
 const git = __nccwpck_require__(5138);
+const { spawnSync } = __nccwpck_require__(3129);
+
+const spawnOpts = { shell: true, stdio: 'pipe', windowsHide: true };
+
+function exec(cmd, args = [], opts = spawnOpts) {
+  console.log('$', cmd, ...args);
+  const result = spawnSync(cmd, args, opts);
+  const output = result.output.filter((e) => e && e.length > 0).toString();
+  console.log(output);
+  if (result.status !== 0) {
+    throw new Error(`Failed with status ${result.status}`);
+  }
+  return output;
+}
 
 async function gitCall(...args) {
   console.log('$ git', ...args);
   const output = await git(...args);
   console.log(output);
+  return output;
 }
 
 exports.checkFormat = async function (argv) {
   console.log(argv);
-  gitCall('status', '--short');
+  exec('yarn', ['run', 'format']);
+  const gitStatus = await gitCall('status', '--short');
+  if (gitStatus) {
+    console.log('\n! found unformatted code');
+  }
 };
 
 
