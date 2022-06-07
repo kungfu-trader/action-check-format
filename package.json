@@ -1,14 +1,14 @@
 {
   "name": "@kungfu-trader/action-check-format",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "main": "dist/index.js",
   "repository": "https://github.com/kungfu-trader/action-check-format",
   "author": "Kungfu Trader",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn format",
+    "build": "yarn format && yarn dist",
     "dist": "ncc build index.js",
-    "format": "prettier --write --parser typescript \"*.js\" && yarn dist",
+    "format": "prettier --write --parser typescript \"*.js\"",
     "lint": "eslint --ext .js ."
   },
   "dependencies": {
