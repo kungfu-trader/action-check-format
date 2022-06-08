@@ -21,7 +21,7 @@ const main = async function () {
 
 if (require.main === require.cache[eval('__filename')]) {
   main().catch((error) => {
-    console.log('test'); console.error(error);
+    console.error(error);
     core.setFailed(error.message);
   });
 }
