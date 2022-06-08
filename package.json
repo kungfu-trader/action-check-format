@@ -1,6 +1,6 @@
 {
   "name": "@kungfu-trader/action-check-format",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "main": "dist/index.js",
   "repository": "https://github.com/kungfu-trader/action-check-format",
   "author": "Kungfu Trader",
