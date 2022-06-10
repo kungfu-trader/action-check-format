@@ -89,7 +89,7 @@ exports.addPullRequestComment = async function (token, owner, repo, pullRequestN
       }
   }`);
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-  const body = `Found unformatted code\n${files}`;
+    const body = `Pull request #${pullRequestNumber}  has files with unformatted code:\n${files}`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
 
