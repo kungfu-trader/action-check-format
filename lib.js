@@ -37,11 +37,12 @@ exports.checkFormat = async function (argv) {
   if (gitStatus) {
     console.log('\n! found unformatted code');
     // 字符串拼接：`words + ${字符串变量}`
+    exports.addPullRequestComment(argv.token, argv.owner, argv.repo, argv.pullRequestNumber, gitStatus);
     throw new Error(`Found unformatted code\n${gitStatus}`);
   }
 };
 
-exports.addPullRequestComment = async function (token, owner, repo, pullRequestNumber) {
+exports.addPullRequestComment = async function (token, owner, repo, pullRequestNumber, files) {
   const octokit = github.getOctokit(token);
   const pullRequestQuery = await octokit.graphql(`
     query {
@@ -50,6 +51,6 @@ exports.addPullRequestComment = async function (token, owner, repo, pullRequestN
       }
   }`);
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-  const body = 'addPrComment';
+  const body = `Found unformatted code\n${files}`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };

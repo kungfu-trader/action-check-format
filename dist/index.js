@@ -11,10 +11,13 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
 const main = async function () {
-  const repo = github.context.repo;
+  const context = github.context;
+  const pullRequestNumber_ = () => (context.issue.number ? context.issue.number : context.payload.pull_request.number);
   const argv = {
     token: core.getInput('token'),
-    owner: repo.owner,
+    owner: context.repo.owner,
+    repo: context.repo,
+    pullRequestNumber: pullRequestNumber_,
   };
   await lib.checkFormat(argv);
 };
@@ -22,6 +25,7 @@ const main = async function () {
 if (require.main === require.cache[eval('__filename')]) {
   main().catch((error) => {
     console.error(error);
+    // 设置操作失败时退出
     core.setFailed(error.message);
   });
 }
@@ -71,11 +75,12 @@ exports.checkFormat = async function (argv) {
   if (gitStatus) {
     console.log('\n! found unformatted code');
     // 字符串拼接：`words + ${字符串变量}`
+    exports.addPullRequestComment(argv.token, argv.owner, argv.repo, argv.pullRequestNumber, gitStatus);
     throw new Error(`Found unformatted code\n${gitStatus}`);
   }
 };
 
-exports.addPullRequestComment = async function (token, owner, repo, pullRequestNumber) {
+exports.addPullRequestComment = async function (token, owner, repo, pullRequestNumber, files) {
   const octokit = github.getOctokit(token);
   const pullRequestQuery = await octokit.graphql(`
     query {
@@ -84,7 +89,7 @@ exports.addPullRequestComment = async function (token, owner, repo, pullRequestN
       }
   }`);
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-  const body = 'addPrComment';
+  const body = `Found unformatted code\n${files}`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
 
