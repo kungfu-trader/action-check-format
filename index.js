@@ -4,10 +4,13 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 const main = async function () {
-  const repo = github.context.repo;
+  const context = github.context;
+  const pullRequestNumber_ = () => (context.issue.number ? context.issue.number : context.payload.pull_request.number);
   const argv = {
     token: core.getInput('token'),
-    owner: repo.owner,
+    owner: context.repo.owner,
+    repo: context.repo,
+    pullRequestNumber: pullRequestNumber_,
   };
   await lib.checkFormat(argv);
 };
@@ -15,6 +18,7 @@ const main = async function () {
 if (require.main === module) {
   main().catch((error) => {
     console.error(error);
+    // 设置操作失败时退出
     core.setFailed(error.message);
   });
 }

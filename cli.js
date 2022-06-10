@@ -6,13 +6,14 @@ const core = require('@actions/core');
 const argv = require('yargs/yargs')(process.argv.slice(2))
   .option('token', { description: 'token', type: 'string' })
   .option('owner', { description: 'owner', type: 'string' })
+  .option('repo', { description: 'repo', type: 'string' })
+  .option('pullRequestNumber', { description: 'pullRequestNumber', type: 'number' })
   .help().argv;
 
-const owner = 'kungfu-trader';
-const repo = 'action-check-format';
-const pullRequestNumber = 6;
+//const owner = 'kungfu-trader';
+//const repo = 'action-check-format';
+//const pullRequestNumber = 6;
 //const token = core.getInput('token');
-const token = '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';
+//const token = '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';
 
-lib.addPullRequestComment(token, owner, repo, pullRequestNumber);
 lib.checkFormat(argv).catch(console.error);
