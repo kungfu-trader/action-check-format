@@ -84,9 +84,8 @@ exports.addPullRequestComment = async function (token, owner, repo, pullRequestN
       }
   }`);
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-  const diff = await gitCall('diff');
-  const body = `${gitStatus} + ${diff}`;
-  await octokit.graphql(`mutation{addComment(input:{subjectID:"${pullRequestID}",body:"${body}"}){subject{id}}}`);
+  const body = 'addPrComment';
+  await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
 
 
