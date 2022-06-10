@@ -14,6 +14,6 @@ const argv = require('yargs/yargs')(process.argv.slice(2))
 //const repo = 'action-check-format';
 //const pullRequestNumber = 6;
 //const token = core.getInput('token');
-//const token = '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';
+//const token = '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';
 
 lib.checkFormat(argv).catch(console.error);
