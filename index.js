@@ -9,8 +9,8 @@ const main = async function () {
   const argv = {
     token: core.getInput('token'),
     owner: context.repo.owner,
-    repo: context.repo,
-    pullRequestNumber: pullRequestNumber_,
+    repo: context.repo.repo,
+    pullRequestNumber: pullRequestNumber_(),
   };
   await lib.checkFormat(argv);
 };
