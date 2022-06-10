@@ -14,7 +14,6 @@ const main = async function () {
 
 if (require.main === module) {
   main().catch((error) => {
-    console.log('test');
     console.error(error);
     core.setFailed(error.message);
   });
