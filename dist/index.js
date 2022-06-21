@@ -102,7 +102,7 @@ exports.addPullRequestComment = async function (argv, filesInfo) {
     `[info] Found unformatted code in repo [${argv.owner}/${argv.repo}]'s ${argv.pullRequestNumber}th pull-request`,
   );
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-    const body = `---Pull request #${argv.pullRequestNumber}  has files with unformatted code---\n${filesInfo}\n---Please ensure the codes formatted---`;
+   const body = `---Pull request #${argv.pullRequestNumber}  has files with unformatted code---\n${filesInfo}\n---Please ensure the codes formatted---`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
 
