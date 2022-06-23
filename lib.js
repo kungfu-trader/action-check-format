@@ -36,13 +36,13 @@ exports.checkFormat = async function (argv) {
   // const packagePath = path.join(processCwd, 'package.json');
   // const packagePath2 = path.resolve('package.json');
   // const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
-  const jsonInfo = fs.readJSONSync('package.json');
-  console.log(`json info:[${jsonInfo}]`);
   //const jsonInfo2 = JSON.parse(fs.readFileSync(packagePath2));
   // console.log(`join package.json path is [${packagePath}]`);
   // console.log(`resolve package.json path is [${packagePath2}]`);
+  const jsonInfo = fs.readJSONSync('package.json');
+  console.log(`json's [scrips] info:[${jsonInfo.scrips}]`);
   const hasFormat = jsonInfo.scripts.format;
-  console.log(`Is format in package.json?[${hasFormat}]`);
+  console.log(`\nIs format in package.json?[${hasFormat}]\n`);
   if (hasFormat !== undefined) {
     // format : 定义在package.json中的scripts
     exec('yarn', ['run', 'format']);
