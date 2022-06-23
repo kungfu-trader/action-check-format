@@ -35,9 +35,10 @@ exports.checkFormat = async function (argv) {
   const packagePath = path.join(processCwd, 'package.json');
   const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
   //console.log(`process cwd is [${processCwd}]`);
-  //console.log(`Package cwd is [${packagePath}]`);
+  console.log(`Package.json path is [${packagePath}]`);\
   const hasFormat = jsonInfo.scripts.format;
-  if (hasFormat) {
+  console.log(`Is format in package.json?[${hasFormat}]`);
+  if (hasFormat !== undefined) {
     // format : 定义在package.json中的scripts
     exec('yarn', ['run', 'format']);
     const gitStatus = await gitCall('status', '--short');
@@ -64,6 +65,6 @@ exports.addPullRequestComment = async function (argv, filesInfo) {
     `[info] Found unformatted code in repo [${argv.owner}/${argv.repo}]'s ${argv.pullRequestNumber}th pull-request`,
   );
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-   const body = `---Pull request #${argv.pullRequestNumber}  has files with unformatted code---\n${filesInfo}\n---Please ensure the codes formatted---`;
+  const body = `---Pull request #${argv.pullRequestNumber}  has files with unformatted code---\n${filesInfo}\n---Please ensure the code formatted---`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
