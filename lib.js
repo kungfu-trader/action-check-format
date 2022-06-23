@@ -37,6 +37,7 @@ exports.checkFormat = async function (argv) {
   // const packagePath2 = path.resolve('package.json');
   // const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
   const jsonInfo = fs.readJSONSync('package.json');
+  console.log(`json info:[${jsonInfo}]`);
   //const jsonInfo2 = JSON.parse(fs.readFileSync(packagePath2));
   // console.log(`join package.json path is [${packagePath}]`);
   // console.log(`resolve package.json path is [${packagePath2}]`);
@@ -53,7 +54,7 @@ exports.checkFormat = async function (argv) {
       throw new Error(`Found unformatted code\n${gitStatus}`);
     }
   } else {
-    console.log(`[info] Notice! In ${packagePath}, scrips doesn't define format:["format":${jsonInfo.scripts.format}]`);
+    console.log(`[info] Notice! In package.json, "format" not defined in scrips:["format":${jsonInfo.scripts.format}]`);
   }
 };
 
