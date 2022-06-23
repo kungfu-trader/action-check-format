@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 const github = require('@actions/github');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const git = require('git-client');
 // 开启子进程，用于在终端执行格式检查脚本
