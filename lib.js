@@ -35,7 +35,7 @@ exports.checkFormat = async function (argv) {
   const packagePath = path.join(processCwd, 'package.json');
   const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
   //console.log(`process cwd is [${processCwd}]`);
-  console.log(`Package.json path is [${packagePath}]`);\
+  console.log(`Package.json path is [${packagePath}]`);
   const hasFormat = jsonInfo.scripts.format;
   console.log(`Is format in package.json?[${hasFormat}]`);
   if (hasFormat !== undefined) {
