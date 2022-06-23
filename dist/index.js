@@ -48,7 +48,7 @@ exports.checkFormat = async function (argv) {
   const jsonInfo = fs.readJSONSync('package.json');
   console.log(`json's [scrips] info:[${jsonInfo.scrips}]`);
   const hasFormat = jsonInfo.scripts.format;
-  console.log(`Is format in package.json?[${hasFormat}]`);
+  console.log(`\nIs format in package.json?[${hasFormat}]\n`);
   if (hasFormat !== undefined) {
     // format : 定义在package.json中的scripts
     exec('yarn', ['run', 'format']);
