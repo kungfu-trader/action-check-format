@@ -32,10 +32,13 @@ async function gitCall(...args) {
 exports.checkFormat = async function (argv) {
   console.log(argv);
   const processCwd = process.cwd();
+  console.log(`processCwd path is [${processCwd}]`);
   const packagePath = path.join(processCwd, 'package.json');
+  const packagePath2 = path.resolve('package.json');
   const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
-  //console.log(`process cwd is [${processCwd}]`);
-  console.log(`Package.json path is [${packagePath}]`);
+  //const jsonInfo2 = JSON.parse(fs.readFileSync(packagePath2));
+  console.log(`join package.json path is [${packagePath}]`);
+  console.log(`resolve package.json path is [${packagePath2}]`);
   const hasFormat = jsonInfo.scripts.format;
   console.log(`Is format in package.json?[${hasFormat}]`);
   if (hasFormat !== undefined) {
