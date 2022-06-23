@@ -40,7 +40,7 @@ exports.checkFormat = async function (argv) {
   // console.log(`join package.json path is [${packagePath}]`);
   // console.log(`resolve package.json path is [${packagePath2}]`);
   const jsonInfo = fs.readJSONSync('package.json');
-  console.log(`json's [scrips] info:[${jsonInfo.scrips}]`);
+  console.log(`package.json's [scrips] info:[${jsonInfo.scripts}]`);
   const hasFormat = jsonInfo.scripts.format;
   console.log(`\nIs format in package.json?[${hasFormat}]\n`);
   if (hasFormat !== undefined) {
