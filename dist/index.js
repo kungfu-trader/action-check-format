@@ -49,7 +49,7 @@ const spawnOpts = { shell: true, stdio: 'pipe', windowsHide: true };
 function exec(cmd, args = [], opts = spawnOpts) {
   console.log('$', cmd, ...args);
   const result = spawnSync(cmd, args, opts);
-  // filter:创建包含通过所提供的函数实现的测试的所有元素的新数组
+  // filter:创建包含通过所提供的函数实现的测试的所有元素的新数组format
   // => : ES6写法
   const output = result.output.filter((e) => e && e.length > 0).toString();
   console.log(output);
@@ -70,10 +70,13 @@ async function gitCall(...args) {
 exports.checkFormat = async function (argv) {
   console.log(argv);
   const processCwd = process.cwd();
+  console.log(`processCwd path is [${processCwd}]`);
   const packagePath = __nccwpck_require__.ab + "package.json";
+  const packagePath2 = __nccwpck_require__.ab + "package.json";
   const jsonInfo = JSON.parse(fs.readFileSync(__nccwpck_require__.ab + "package.json"));
-  //console.log(`process cwd is [${processCwd}]`);
-  console.log(`Package.json path is [${packagePath}]`);
+  //const jsonInfo2 = JSON.parse(fs.readFileSync(packagePath2));
+  console.log(`join package.json path is [${packagePath}]`);
+  console.log(`resolve package.json path is [${packagePath2}]`);
   const hasFormat = jsonInfo.scripts.format;
   console.log(`Is format in package.json?[${hasFormat}]`);
   if (hasFormat !== undefined) {
@@ -81,7 +84,7 @@ exports.checkFormat = async function (argv) {
     exec('yarn', ['run', 'format']);
     const gitStatus = await gitCall('status', '--short');
     if (gitStatus) {
-      console.log('\n! found unformatted code');
+      console.log('\n! Found unformatted code');
       // 字符串拼接：`words + ${字符串变量}`
       exports.addPullRequestComment(argv, gitStatus);
       throw new Error(`Found unformatted code\n${gitStatus}`);
