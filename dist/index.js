@@ -49,7 +49,7 @@ const spawnOpts = { shell: true, stdio: 'pipe', windowsHide: true };
 function exec(cmd, args = [], opts = spawnOpts) {
   console.log('$', cmd, ...args);
   const result = spawnSync(cmd, args, opts);
-  // filter:创建包含通过所提供的函数实现的测试的所有元素的新数组
+  // filter:创建包含通过所提供的函数实现的测试的所有元素的新数组format
   // => : ES6写法
   const output = result.output.filter((e) => e && e.length > 0).toString();
   console.log(output);
@@ -81,7 +81,7 @@ exports.checkFormat = async function (argv) {
     exec('yarn', ['run', 'format']);
     const gitStatus = await gitCall('status', '--short');
     if (gitStatus) {
-      console.log('\n! found unformatted code');
+      console.log('\n! Found unformatted code');
       // 字符串拼接：`words + ${字符串变量}`
       exports.addPullRequestComment(argv, gitStatus);
       throw new Error(`Found unformatted code\n${gitStatus}`);
