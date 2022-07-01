@@ -6,6 +6,7 @@
 
 /* eslint-disable no-restricted-globals */
 const github = __nccwpck_require__(5438);
+const actionLib = __nccwpck_require__(6981);
 const fs = __nccwpck_require__(5630);
 const path = __nccwpck_require__(1017);
 const git = __nccwpck_require__(5138);
@@ -63,7 +64,7 @@ exports.checkFormat = async function (argv) {
     console.log(`[info] Notice! In package.json, "format" not defined in scrips:["format":${jsonInfo.scripts.format}]`);
   }
 };
-
+ 
 exports.addPullRequestComment = async function (argv, filesInfo) {
   const octokit = github.getOctokit(argv.token);
   const pullRequestQuery = await octokit.graphql(`
@@ -15841,6 +15842,14 @@ function wrappy (fn, cb) {
     return ret
   }
 }
+
+
+/***/ }),
+
+/***/ 6981:
+/***/ ((module) => {
+
+module.exports = eval("require")("@kungfu-trader/action-common-lib");
 
 
 /***/ }),
