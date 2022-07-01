@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-globals */
 const github = require('@actions/github');
-const actionLib = require('@kungfu-trader/action-common-lib');
 const fs = require('fs-extra');
 const path = require('path');
 const git = require('git-client');
