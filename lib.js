@@ -58,7 +58,7 @@ exports.checkFormat = async function (argv) {
     console.log(`[info] Notice! In package.json, "format" not defined in scrips:["format":${jsonInfo.scripts.format}]`);
   }
 };
- 
+
 exports.addPullRequestComment = async function (argv, filesInfo) {
   const octokit = github.getOctokit(argv.token);
   const pullRequestQuery = await octokit.graphql(`
