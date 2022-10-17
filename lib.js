@@ -30,19 +30,8 @@ async function gitCall(...args) {
 }
 
 exports.checkFormat = async function (argv) {
-  console.log(argv);
-  // const processCwd = process.cwd();
-  // console.log(`processCwd path is [${processCwd}]`);
-  // const packagePath = path.join(processCwd, 'package.json');
-  // const packagePath2 = path.resolve('package.json');
-  // const jsonInfo = JSON.parse(fs.readFileSync(packagePath));
-  //const jsonInfo2 = JSON.parse(fs.readFileSync(packagePath2));
-  // console.log(`join package.json path is [${packagePath}]`);
-  // console.log(`resolve package.json path is [${packagePath2}]`);
   const jsonInfo = fs.readJSONSync('package.json');
-  console.log(`package.json's [scrips] info:[${jsonInfo.scripts}]`);
   const hasFormat = jsonInfo.scripts.format;
-  console.log(`\nIs format in package.json?[${hasFormat}]\n`);
   if (hasFormat !== undefined) {
     // format : 定义在package.json中的scripts
     exec('yarn', ['run', 'format']);
@@ -54,7 +43,7 @@ exports.checkFormat = async function (argv) {
       throw new Error(`Found unformatted code\n${gitStatus}`);
     }
   } else {
-    console.log(`[info] Notice! In package.json, "format" not defined in scrips:["format":${jsonInfo.scripts.format}]`);
+    console.log('[info] package.json does not define "format" action in scrips.');
   }
 };
 
@@ -70,6 +59,6 @@ exports.addPullRequestComment = async function (argv, filesInfo) {
     `[info] Found unformatted code in repo [${argv.owner}/${argv.repo}]'s ${argv.pullRequestNumber}th pull-request`,
   );
   const pullRequestID = pullRequestQuery.repository.pullRequest.id;
-  const body = `---Pull request #${argv.pullRequestNumber}  has files with unformatted code---\n${filesInfo}\n---Please ensure the code formatted---`;
+  const body = `Unformatted code:\n${filesInfo}`;
   await octokit.graphql(`mutation{addComment(input:{body:"${body}", subjectId:"${pullRequestID}"}){clientMutationId}}`);
 };
